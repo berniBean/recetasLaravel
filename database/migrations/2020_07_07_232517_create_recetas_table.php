@@ -14,7 +14,7 @@ class CreateRecetasTable extends Migration
     public function up()
     {
 
-        schema::create('categoria_receta' ,function (Blueprint $table){
+        schema::create('categoria_recetas' ,function (Blueprint $table){
             $table->id();
             $table->string('nombre');
             $table->timestamps();
@@ -27,7 +27,7 @@ class CreateRecetasTable extends Migration
             $table->text('preparacion');
             $table->string('imagen');
             $table->foreignId('user_id')->references('id')->on('users')->comment('El usuario que crea la receta');
-            $table->foreignId('categoria_id')->references('id')->on('categoria_receta')->comment('La categoria de la receta');
+            $table->foreignId('categoria_id')->references('id')->on('categoria_recetas')->comment('La categoria de la receta');
             $table->timestamps();
         });
     }
