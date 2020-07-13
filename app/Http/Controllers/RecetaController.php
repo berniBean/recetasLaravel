@@ -111,6 +111,7 @@ class RecetaController extends Controller
     public function edit(Receta $receta)
     {
         //
+        //$this->authorize('edit',$receta);
         //obtener categorias con modelo
         $categorias = CategoriaReceta::all(['id','nombre']);
         return view('recetas.edit',compact('categorias','receta'));
@@ -165,6 +166,9 @@ class RecetaController extends Controller
      */
     public function destroy(Receta $receta)
     {
-        //
+        $this->authorize('delete',$receta);
+        $receta->delete();
+
+        return redirect()->action('RecetaController@index') ;
     }
 }
