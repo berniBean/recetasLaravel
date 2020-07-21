@@ -16,12 +16,13 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-|   @yield('styles')
+   @yield('styles')
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm">
             <div class="container">
@@ -57,6 +58,21 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" 
+                                    href="{{route('perfiles.edit', ['perfil'=> Auth::user()->id]) }}">
+                                        {{ __('Editar perfil') }}
+                                    </a>
+                                    
+                                    <a class="dropdown-item" 
+                                    href="{{route('perfiles.show', ['perfil'=> Auth::user()->id]) }}">
+                                        {{ __('Ver perfil') }}
+                                    </a>
+
+                                    <a class="dropdown-item" 
+                                    href="{{route('recetas.index')}}">
+                                        {{ __('Ver recetas') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -24,8 +24,17 @@ class RecetaController extends Controller
     public function index()
     {
         //auth()->user()->recetas->dd();
-        $recetas= auth()->user()->recetas;
-        return view('recetas.index')->with('recetas',$recetas);
+        // $recetas= auth()->user()->recetas;
+
+        //traer usuario autenticado
+        $usuario = auth()->user();
+
+        //auth()->user()->meGusta->dd();
+        //paginar recetas
+        $recetas = Receta::where('user_id', $usuario->id)->paginate(2);
+        return view('recetas.index')
+                        ->with('recetas',$recetas)
+                        ->with('usuario',$usuario);
     }
 
     /**
@@ -98,8 +107,13 @@ class RecetaController extends Controller
      */
     public function show(Receta $receta)
     {
+        //obtener si el usuario actual le dió me gusta y está atenticado
+        $like=(auth()->user())? auth()->user()->meGusta->contains($receta->id):false;
+
+        //pasa la cantidad de likes a la vista
+        $likes = $receta->likes->count();
         //$this->authorize('view',$receta);
-        return view('recetas.show',compact('receta'));
+        return view('recetas.show',compact('receta','like','likes'));
     }
 
     /**
@@ -111,9 +125,12 @@ class RecetaController extends Controller
     public function edit(Receta $receta)
     {
         //
-        //$this->authorize('edit',$receta);
+        
         //obtener categorias con modelo
+        
         $categorias = CategoriaReceta::all(['id','nombre']);
+        
+        $this->authorize('view',$receta);
         return view('recetas.edit',compact('categorias','receta'));
     }
 
