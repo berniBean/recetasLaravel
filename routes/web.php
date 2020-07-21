@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Auth::routes();
+
+Route::get('/','InicioController@index')->name('inicio.index');
 
 //recetas
 Route::get('/recetas','RecetaController@index')->name('recetas.index');
